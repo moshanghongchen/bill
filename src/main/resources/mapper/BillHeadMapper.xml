@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.model.mapper.BillHeadMapper">
+  <resultMap id="BaseResultMap" type="com.model.entity.BillHead">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="contract_num" jdbcType="VARCHAR" property="contractNum" />
+    <result column="com_name" jdbcType="VARCHAR" property="comName" />
+    <result column="pro_num" jdbcType="VARCHAR" property="proNum" />
+    <result column="pro_name" jdbcType="VARCHAR" property="proName" />
+    <result column="car_no" jdbcType="VARCHAR" property="carNo" />
+    <result column="cargo_weight" jdbcType="VARCHAR" property="cargoWeight" />
+    <result column="weight_unit" jdbcType="VARCHAR" property="weightUnit" />
+    <result column="freight_unit" jdbcType="VARCHAR" property="freightUnit" />
+    <result column="freight_price" jdbcType="VARCHAR" property="freightPrice" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="norms" jdbcType="VARCHAR" property="norms" />
+    <result column="norms_unit" jdbcType="VARCHAR" property="normsUnit" />
+    <result column="goods_count" jdbcType="VARCHAR" property="goodsCount" />
+    <result column="goods_count_dx" jdbcType="VARCHAR" property="goodsCountDx" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="modify_datetime" jdbcType="TIMESTAMP" property="modifyDatetime" />
+    <result column="create_userid" jdbcType="VARCHAR" property="createUserid" />
+    <result column="modify_userid" jdbcType="VARCHAR" property="modifyUserid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, contract_num, com_name, pro_num, pro_name, car_no, cargo_weight, weight_unit, 
+    freight_unit, freight_price, goods_name, norms, norms_unit, goods_count, goods_count_dx, 
+    remark, create_datetime, modify_datetime, create_userid, modify_userid
+  </sql>
+  <select id="selectByExample" parameterType="com.model.entity.BillHeadExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from BILL_HEAD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BILL_HEAD
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from BILL_HEAD
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.model.entity.BillHeadExample">
+    delete from BILL_HEAD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.model.entity.BillHead">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into BILL_HEAD (contract_num, com_name, pro_num, 
+      pro_name, car_no, cargo_weight, 
+      weight_unit, freight_unit, freight_price, 
+      goods_name, norms, norms_unit, 
+      goods_count, goods_count_dx, remark, 
+      create_datetime, modify_datetime, create_userid, 
+      modify_userid)
+    values (#{contractNum,jdbcType=VARCHAR}, #{comName,jdbcType=VARCHAR}, #{proNum,jdbcType=VARCHAR}, 
+      #{proName,jdbcType=VARCHAR}, #{carNo,jdbcType=VARCHAR}, #{cargoWeight,jdbcType=VARCHAR}, 
+      #{weightUnit,jdbcType=VARCHAR}, #{freightUnit,jdbcType=VARCHAR}, #{freightPrice,jdbcType=VARCHAR}, 
+      #{goodsName,jdbcType=VARCHAR}, #{norms,jdbcType=VARCHAR}, #{normsUnit,jdbcType=VARCHAR}, 
+      #{goodsCount,jdbcType=VARCHAR}, #{goodsCountDx,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, #{createUserid,jdbcType=VARCHAR}, 
+      #{modifyUserid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.entity.BillHead">
+    insert into BILL_HEAD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+       id,
+      <if test="contractNum != null">
+        contract_num,
+      </if>
+      <if test="comName != null">
+        com_name,
+      </if>
+      <if test="proNum != null">
+        pro_num,
+      </if>
+      <if test="proName != null">
+        pro_name,
+      </if>
+      <if test="carNo != null">
+        car_no,
+      </if>
+      <if test="cargoWeight != null">
+        cargo_weight,
+      </if>
+      <if test="weightUnit != null">
+        weight_unit,
+      </if>
+      <if test="freightUnit != null">
+        freight_unit,
+      </if>
+      <if test="freightPrice != null">
+        freight_price,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="norms != null">
+        norms,
+      </if>
+      <if test="normsUnit != null">
+        norms_unit,
+      </if>
+      <if test="goodsCount != null">
+        goods_count,
+      </if>
+      <if test="goodsCountDx != null">
+        goods_count_dx,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="modifyDatetime != null">
+        modify_datetime,
+      </if>
+      <if test="createUserid != null">
+        create_userid,
+      </if>
+      <if test="modifyUserid != null">
+        modify_userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id},
+      <if test="contractNum != null">
+        #{contractNum,jdbcType=VARCHAR},
+      </if>
+      <if test="comName != null">
+        #{comName,jdbcType=VARCHAR},
+      </if>
+      <if test="proNum != null">
+        #{proNum,jdbcType=VARCHAR},
+      </if>
+      <if test="proName != null">
+        #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="carNo != null">
+        #{carNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoWeight != null">
+        #{cargoWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="weightUnit != null">
+        #{weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="freightUnit != null">
+        #{freightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="freightPrice != null">
+        #{freightPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="norms != null">
+        #{norms,jdbcType=VARCHAR},
+      </if>
+      <if test="normsUnit != null">
+        #{normsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null">
+        #{goodsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCountDx != null">
+        #{goodsCountDx,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null">
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null">
+        #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserid != null">
+        #{modifyUserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.model.entity.BillHeadExample" resultType="java.lang.Long">
+    select count(*) from BILL_HEAD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update BILL_HEAD
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractNum != null">
+        contract_num = #{record.contractNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comName != null">
+        com_name = #{record.comName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proNum != null">
+        pro_num = #{record.proNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proName != null">
+        pro_name = #{record.proName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNo != null">
+        car_no = #{record.carNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cargoWeight != null">
+        cargo_weight = #{record.cargoWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weightUnit != null">
+        weight_unit = #{record.weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.freightUnit != null">
+        freight_unit = #{record.freightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.freightPrice != null">
+        freight_price = #{record.freightPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.norms != null">
+        norms = #{record.norms,jdbcType=VARCHAR},
+      </if>
+      <if test="record.normsUnit != null">
+        norms_unit = #{record.normsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCount != null">
+        goods_count = #{record.goodsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCountDx != null">
+        goods_count_dx = #{record.goodsCountDx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDatetime != null">
+        create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyDatetime != null">
+        modify_datetime = #{record.modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUserid != null">
+        create_userid = #{record.createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserid != null">
+        modify_userid = #{record.modifyUserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update BILL_HEAD
+    set id = #{record.id,jdbcType=VARCHAR},
+      contract_num = #{record.contractNum,jdbcType=VARCHAR},
+      com_name = #{record.comName,jdbcType=VARCHAR},
+      pro_num = #{record.proNum,jdbcType=VARCHAR},
+      pro_name = #{record.proName,jdbcType=VARCHAR},
+      car_no = #{record.carNo,jdbcType=VARCHAR},
+      cargo_weight = #{record.cargoWeight,jdbcType=VARCHAR},
+      weight_unit = #{record.weightUnit,jdbcType=VARCHAR},
+      freight_unit = #{record.freightUnit,jdbcType=VARCHAR},
+      freight_price = #{record.freightPrice,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      norms = #{record.norms,jdbcType=VARCHAR},
+      norms_unit = #{record.normsUnit,jdbcType=VARCHAR},
+      goods_count = #{record.goodsCount,jdbcType=VARCHAR},
+      goods_count_dx = #{record.goodsCountDx,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      modify_datetime = #{record.modifyDatetime,jdbcType=TIMESTAMP},
+      create_userid = #{record.createUserid,jdbcType=VARCHAR},
+      modify_userid = #{record.modifyUserid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.entity.BillHead">
+    update BILL_HEAD
+    <set>
+      <if test="contractNum != null">
+        contract_num = #{contractNum,jdbcType=VARCHAR},
+      </if>
+      <if test="comName != null">
+        com_name = #{comName,jdbcType=VARCHAR},
+      </if>
+      <if test="proNum != null">
+        pro_num = #{proNum,jdbcType=VARCHAR},
+      </if>
+      <if test="proName != null">
+        pro_name = #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="carNo != null">
+        car_no = #{carNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoWeight != null">
+        cargo_weight = #{cargoWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="weightUnit != null">
+        weight_unit = #{weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="freightUnit != null">
+        freight_unit = #{freightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="freightPrice != null">
+        freight_price = #{freightPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="norms != null">
+        norms = #{norms,jdbcType=VARCHAR},
+      </if>
+      <if test="normsUnit != null">
+        norms_unit = #{normsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null">
+        goods_count = #{goodsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCountDx != null">
+        goods_count_dx = #{goodsCountDx,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null">
+        modify_datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null">
+        create_userid = #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserid != null">
+        modify_userid = #{modifyUserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.entity.BillHead">
+    update BILL_HEAD
+    set contract_num = #{contractNum,jdbcType=VARCHAR},
+      com_name = #{comName,jdbcType=VARCHAR},
+      pro_num = #{proNum,jdbcType=VARCHAR},
+      pro_name = #{proName,jdbcType=VARCHAR},
+      car_no = #{carNo,jdbcType=VARCHAR},
+      cargo_weight = #{cargoWeight,jdbcType=VARCHAR},
+      weight_unit = #{weightUnit,jdbcType=VARCHAR},
+      freight_unit = #{freightUnit,jdbcType=VARCHAR},
+      freight_price = #{freightPrice,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      norms = #{norms,jdbcType=VARCHAR},
+      norms_unit = #{normsUnit,jdbcType=VARCHAR},
+      goods_count = #{goodsCount,jdbcType=VARCHAR},
+      goods_count_dx = #{goodsCountDx,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      modify_datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      create_userid = #{createUserid,jdbcType=VARCHAR},
+      modify_userid = #{modifyUserid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByBillHead" parameterType="com.model.entity.BillHead" resultMap="BaseResultMap">
+    select * from BILL_HEAD
+    <where>
+      1=1
+      <if test="id != null">
+        and id like '%'|| #{id} || '%'
+      </if>
+    </where>
+
+  </select>
+
+
+</mapper>

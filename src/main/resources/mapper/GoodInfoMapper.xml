@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.model.mapper.GoodInfoMapper">
+  <resultMap id="BaseResultMap" type="com.model.entity.GoodInfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="norms" jdbcType="VARCHAR" property="norms" />
+    <result column="norms_unit" jdbcType="VARCHAR" property="normsUnit" />
+    <result column="goods_count" jdbcType="VARCHAR" property="goodsCount" />
+    <result column="goods_count_dx" jdbcType="VARCHAR" property="goodsCountDx" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="hid" jdbcType="VARCHAR" property="hid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goods_name, norms, norms_unit, goods_count, goods_count_dx, remark, hid
+  </sql>
+  <select id="selectByExample" parameterType="com.model.entity.GoodInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from GOOD_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from GOOD_INFO
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from GOOD_INFO
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.model.entity.GoodInfoExample">
+    delete from GOOD_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.model.entity.GoodInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into GOOD_INFO (goods_name, norms, norms_unit, 
+      goods_count, goods_count_dx, remark, 
+      hid)
+    values (#{goodsName,jdbcType=VARCHAR}, #{norms,jdbcType=VARCHAR}, #{normsUnit,jdbcType=VARCHAR}, 
+      #{goodsCount,jdbcType=VARCHAR}, #{goodsCountDx,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{hid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.entity.GoodInfo">
+    insert into GOOD_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        id,
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="norms != null">
+        norms,
+      </if>
+      <if test="normsUnit != null">
+        norms_unit,
+      </if>
+      <if test="goodsCount != null">
+        goods_count,
+      </if>
+      <if test="goodsCountDx != null">
+        goods_count_dx,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="hid != null">
+        hid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        #{id},
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="norms != null">
+        #{norms,jdbcType=VARCHAR},
+      </if>
+      <if test="normsUnit != null">
+        #{normsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null">
+        #{goodsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCountDx != null">
+        #{goodsCountDx,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="hid != null">
+        #{hid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.model.entity.GoodInfoExample" resultType="java.lang.Long">
+    select count(*) from GOOD_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update GOOD_INFO
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.norms != null">
+        norms = #{record.norms,jdbcType=VARCHAR},
+      </if>
+      <if test="record.normsUnit != null">
+        norms_unit = #{record.normsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCount != null">
+        goods_count = #{record.goodsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCountDx != null">
+        goods_count_dx = #{record.goodsCountDx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hid != null">
+        hid = #{record.hid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update GOOD_INFO
+    set id = #{record.id,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      norms = #{record.norms,jdbcType=VARCHAR},
+      norms_unit = #{record.normsUnit,jdbcType=VARCHAR},
+      goods_count = #{record.goodsCount,jdbcType=VARCHAR},
+      goods_count_dx = #{record.goodsCountDx,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      hid = #{record.hid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.entity.GoodInfo">
+    update GOOD_INFO
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="norms != null">
+        norms = #{norms,jdbcType=VARCHAR},
+      </if>
+      <if test="normsUnit != null">
+        norms_unit = #{normsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null">
+        goods_count = #{goodsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCountDx != null">
+        goods_count_dx = #{goodsCountDx,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="hid != null">
+        hid = #{hid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.entity.GoodInfo">
+    update GOOD_INFO
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      norms = #{norms,jdbcType=VARCHAR},
+      norms_unit = #{normsUnit,jdbcType=VARCHAR},
+      goods_count = #{goodsCount,jdbcType=VARCHAR},
+      goods_count_dx = #{goodsCountDx,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      hid = #{hid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
